@@ -41,7 +41,7 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 1️⃣ Check all fields
+   
     if (!email || !password) {
       return res.status(400).json({
         status: false,
@@ -49,7 +49,7 @@ const login = async (req, res) => {
       });
     }
 
-    // 2️⃣ Find user
+   
     const user = await userModel.findOne({ email });
     if (!user) {
       return res.status(401).json({
@@ -130,3 +130,4 @@ const profile = async (req, res) => {
 };
 
 module.exports = { register, login, logout, profile };
+ 
