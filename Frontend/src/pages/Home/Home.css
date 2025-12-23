@@ -1,0 +1,138 @@
+:root {
+    --primary-color: #38bdf8;
+    --dark-bg: #0f172a;
+    --light-bg: #020617;
+    --text-light: #ffffff;
+    --text-muted: #cbd5e1;
+  }
+  
+
+  .home {
+    font-family: "Segoe UI", sans-serif;
+    color: var(--text-light);
+  }
+  
+
+  .hero {
+    background: linear-gradient(
+      to right,
+      var(--dark-bg),
+      var(--light-bg)
+    );
+    padding: 80px 40px;
+    text-align: center;
+  }
+  
+  .hero h1 {
+    font-size: 40px;
+    margin-bottom: 16px;
+  }
+  
+  .hero h1 span {
+    color: var(--primary-color);
+  }
+  
+  .hero p {
+    max-width: 600px;
+    margin: 0 auto 24px;
+    color: var(--text-muted);
+  }
+  
+  .hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+  
+
+  .primary-btn {
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .secondary-btn {
+    padding: 12px 24px;
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    border-radius: 6px;
+    color: var(--primary-color);
+    cursor: pointer;
+  }
+  
+ 
+  .how-it-works {
+    padding: 60px 40px;
+    text-align: center;
+    background-color: #020617;
+  }
+  
+  .how-it-works h2 {
+    margin-bottom: 40px;
+  }
+  
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  
+  .step {
+    background-color: var(--dark-bg);
+    padding: 24px;
+    border-radius: 8px;
+  }
+  
+  .step h3 {
+    margin-bottom: 8px;
+    color: var(--primary-color);
+  }
+  
+  .featured {
+    padding: 60px 40px;
+    background-color: var(--light-bg);
+    text-align: center;
+  }
+  
+  .car-grid {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  
+  .car-card {
+    background-color: var(--dark-bg);
+    padding: 24px;
+    border-radius: 8px;
+  }
+  
+ 
+  @media (max-width: 900px) {
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .car-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 500px) {
+    .hero h1 {
+      font-size: 28px;
+    }
+  
+    .steps,
+    .car-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .hero-buttons {
+      flex-direction: column;
+    }
+  }
+  
