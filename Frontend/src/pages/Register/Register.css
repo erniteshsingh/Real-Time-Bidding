@@ -86,7 +86,6 @@
     color: var(--primary);
     cursor: pointer;
   }
-  
 
   @media (max-width: 480px) {
     .modal-card {

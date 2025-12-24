@@ -6,7 +6,7 @@
     --muted: #94a3b8;
   }
   
-  /* Overlay */
+
   .modal-overlay {
     position: fixed;
     inset: 0;
@@ -17,8 +17,7 @@
     justify-content: center;
     z-index: 1000;
   }
-  
-  /* Card */
+
   .modal-card {
     width: 100%;
     max-width: 420px;
@@ -29,7 +28,7 @@
     box-shadow: 0 20px 40px rgba(0,0,0,0.4);
   }
   
-  /* Close */
+
   .close-btn {
     position: absolute;
     top: 14px;
@@ -41,7 +40,7 @@
     cursor: pointer;
   }
   
-  /* Text */
+
   .modal-card h2 {
     margin-bottom: 6px;
   }
@@ -50,8 +49,9 @@
     margin-bottom: 24px;
     color: var(--muted);
   }
+
   
-  /* Form */
+
   .modal-card form {
     display: flex;
     flex-direction: column;
@@ -77,15 +77,30 @@
     cursor: pointer;
   }
   
-  /* Footer */
+ 
   .modal-footer {
     margin-top: 18px;
     text-align: center;
     color: var(--primary);
     cursor: pointer;
+    
+  }
+  .link-btn {
+    background: none;
+    border: none;
+    color: #38bdf8;
+
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 4px;
   }
   
-  /* Responsive */
+  .link-btn:hover {
+    text-decoration: underline;
+  }
+  
+  
+
   @media (max-width: 480px) {
     .modal-card {
       padding: 30px 24px;

@@ -12,20 +12,32 @@ const Navbar = () => {
 
   const closeMenu = () => setMenuOpen(false);
 
+  const openRegisterModal = () => {
+    setOpenLogin(false);
+    setOpenRegister(true);
+    closeMenu();
+  };
+
+  const openLoginModal = () => {
+    setOpenRegister(false);
+    setOpenLogin(true);
+    closeMenu();
+  };
+
   return (
     <>
       <nav className="navbar">
-        
+        {/* Logo */}
         <Link to="/" className="navbar-logo" onClick={closeMenu}>
           <span>Car</span>Auction
         </Link>
 
-        
+        {/* Hamburger */}
         <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
           ☰
         </div>
 
-        
+        {/* Links */}
         <ul className={`navbar-links ${menuOpen ? "active" : ""}`}>
           <li>
             <Link to="/" onClick={closeMenu}>
@@ -47,7 +59,6 @@ const Navbar = () => {
               Sell
             </Link>
           </li>
-
           <li>
             <Link to="/contact" onClick={closeMenu}>
               Contact
@@ -55,38 +66,36 @@ const Navbar = () => {
           </li>
         </ul>
 
-     
         <div className="navbar-actions">
           <input
             type="text"
             placeholder="Search cars..."
             className="navbar-search"
           />
-          <button
-            className="register-btn"
-            onClick={() => {
-              setOpenRegister(true);
-              closeMenu();
-            }}
-          >
+
+          <button className="register-btn" onClick={openRegisterModal}>
             Register
           </button>
 
-          <button
-            className="login-btn"
-            onClick={() => {
-              setOpenLogin(true);
-              closeMenu();
-            }}
-          >
+          <button className="login-btn" onClick={openLoginModal}>
             Login
           </button>
         </div>
       </nav>
 
-     
-      {openLogin && <Login onClose={() => setOpenLogin(false)} />}
-      {openRegister && <Register onClose={() => setOpenRegister(false)} />}
+      {openRegister && (
+        <Register
+          onClose={() => setOpenRegister(false)}
+          onOpenLogin={openLoginModal}
+        />
+      )}
+
+      {openLogin && (
+        <Login
+          onClose={() => setOpenLogin(false)}
+          onOpenRegister={openRegisterModal}
+        />
+      )}
     </>
   );
 };

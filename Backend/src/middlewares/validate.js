@@ -9,7 +9,6 @@ const responseWithValidationResult = (req, res, next) => {
       errors: errors.array(),
     });
   }
-
   next();
 };
 
