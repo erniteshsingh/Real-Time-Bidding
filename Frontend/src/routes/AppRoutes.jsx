@@ -5,8 +5,8 @@ import Contact from "../pages/Contact/Contact";
 import Sell from "../pages/Sell/Sell";
 import About from "../pages/About/About";
 import Services from "../pages/Service/Services";
-import Register from "../pages/Register/Register";
-import Login from "../pages/Login/Login";
+
+import Profile from "../pages/Profile/Profile";
 
 const AppRoutes = () => {
   return (
@@ -16,6 +16,7 @@ const AppRoutes = () => {
       <Route path="/services" element={<Services />} />
       <Route path="/sell" element={<Sell />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 };

@@ -1,0 +1,86 @@
+:root {
+    --primary-color: #38bdf8;
+    --dark-bg: #0f172a;
+    --card-bg: #020617;
+    --text-light: #ffffff;
+    --text-muted: #94a3b8;
+  }
+  
+  /* Page */
+  .profile-page {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark-bg);
+    padding: 40px 20px;
+  }
+  
+  /* Card */
+  .profile-card {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    color: var(--text-light);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Avatar */
+  .profile-avatar {
+    font-size: 90px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+  }
+  
+  .profile-card h2 {
+    margin-bottom: 20px;
+  }
+  
+  /* Info */
+  .profile-info p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  /* Actions */
+  .profile-actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 12px;
+  }
+  
+  .profile-actions button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .edit-btn {
+    background-color: var(--primary-color);
+    color: #020617;
+  }
+  
+  .logout-btn {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+  }
+  
+  /* Responsive */
+  @media (max-width: 480px) {
+    .profile-card {
+      padding: 30px 20px;
+    }
+  }
+  

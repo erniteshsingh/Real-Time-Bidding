@@ -66,11 +66,14 @@
   border: none;
 }
 
-.register-btn {
+.profile{
+  cursor: pointer;
+}
+/* .register-btn {
   background-color: transparent;
   color: #38bdf8;
   border: 1px solid #38bdf8;
-}
+} */
 
 .login-btn {
   background-color: transparent;

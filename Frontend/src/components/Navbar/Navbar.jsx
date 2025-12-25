@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { CgProfile } from "react-icons/cg";
+import { CiMenuBurger } from "react-icons/ci";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import "./Navbar.css";
 import Register from "../../pages/Register/Register";
 import Login from "../../pages/Login/Login";
-
+import { AuthContext } from "../../context/AuthContext";
 const Navbar = () => {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
+  const { user, logout } = useContext(AuthContext);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -27,17 +31,14 @@ const Navbar = () => {
   return (
     <>
       <nav className="navbar">
-        {/* Logo */}
         <Link to="/" className="navbar-logo" onClick={closeMenu}>
           <span>Car</span>Auction
         </Link>
 
-        {/* Hamburger */}
         <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-          ☰
+          <CiMenuBurger />
         </div>
 
-        {/* Links */}
         <ul className={`navbar-links ${menuOpen ? "active" : ""}`}>
           <li>
             <Link to="/" onClick={closeMenu}>
@@ -73,13 +74,15 @@ const Navbar = () => {
             className="navbar-search"
           />
 
-          <button className="register-btn" onClick={openRegisterModal}>
-            Register
-          </button>
-
-          <button className="login-btn" onClick={openLoginModal}>
-            Login
-          </button>
+          {user ? (
+            <span className="profile" onClick={() => navigate("/profile")}>
+              <CgProfile size={22} />
+            </span>
+          ) : (
+            <button className="login-btn" onClick={openLoginModal}>
+              Login
+            </button>
+          )}
         </div>
       </nav>
 
