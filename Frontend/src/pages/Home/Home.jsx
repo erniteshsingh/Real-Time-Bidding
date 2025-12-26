@@ -1,10 +1,10 @@
 import React from "react";
 import "./Home.css";
 
+import Products from "../Products/Products";
 const Home = () => {
   return (
     <div className="home">
-     
       <section className="hero">
         <div className="hero-content">
           <h1>
@@ -20,8 +20,10 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <section>
+        <Products />
+      </section>
 
-  
       <section className="how-it-works">
         <h2>How It Works</h2>
         <div className="steps">
@@ -44,7 +46,6 @@ const Home = () => {
         </div>
       </section>
 
-    
       <section className="featured">
         <h2>Featured Auctions</h2>
         <div className="car-grid">

@@ -1,14 +1,21 @@
 import { useContext } from "react";
 import "./Profile.css";
 import { FaUserCircle, FaEnvelope, FaPhone } from "react-icons/fa";
-
-const user = {
-  username: "coder",
-  email: "coder@gmail.com",
-  role: "user",
-};
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const { user, loading, logout } = useContext(AuthContext);
+
+  if (loading) return <p>Loading profile...</p>;
+  if (!user) return <p>User not logged in</p>;
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <div className="profile-page">
       <div className="profile-card">
@@ -22,14 +29,13 @@ const Profile = () => {
           <p>
             <FaEnvelope /> {user.email}
           </p>
-          <p>
-            <FaPhone /> {user.role}
-          </p>
         </div>
 
         <div className="profile-actions">
           <button className="edit-btn">Edit Profile</button>
-          <button className="logout-btn">Logout</button>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
       </div>
     </div>
