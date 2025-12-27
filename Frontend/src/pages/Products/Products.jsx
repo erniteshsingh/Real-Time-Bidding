@@ -1,59 +1,64 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "./Products.css";
 
-const cars = [
-  {
-    id: 1,
-    name: "BMW M5",
-    model: "2023",
-    price: "₹85,00,000",
-    image: "https://images.unsplash.com/photo-1617531653332-bd46c24f2068",
-  },
-  {
-    id: 2,
-    name: "Audi A6",
-    model: "2022",
-    price: "₹72,00,000",
-    image: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2",
-  },
-  {
-    id: 3,
-    name: "Mercedes C-Class",
-    model: "2023",
-    price: "₹68,00,000",
-    image: "https://images.unsplash.com/photo-1549924231-f129b911e442",
-  },
-];
-
 const Products = () => {
+  const [cars, setCars] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCar, setSelectedCar] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:3000/api/products/getallProducts"
+        );
+        setCars(res.data.data);
+      } catch (error) {
+        console.error("Failed to fetch products", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const openModal = (car) => {
     setSelectedCar(car);
     setShowModal(true);
   };
 
+  if (loading) return <p className="loading">Loading products...</p>;
+
   return (
     <div className="products-container">
       {cars.map((car) => (
-        <div className="product-card" key={car.id}>
-          <img src={car.image} alt={car.name} />
+        <div className="product-card" key={car._id}>
+          <img src={`http://localhost:3000/${car.images[0]}`} alt={car.title} />
 
           <div className="card-body">
-            <h3>{car.name}</h3>
-            <p className="model">Model: {car.model}</p>
-            <p className="price">{car.price}</p>
+            <h3 className="title">{car.title}</h3>
 
-            <button onClick={() => openModal(car)}>Place Bid</button>
+            <p className="category">{car.category}</p>
+
+            <p className="description">{car.description?.slice(0, 80)}...</p>
+
+            <div className="price-row">
+              <span className="price">₹{car.price}</span>
+              <button onClick={() => openModal(car)}>Place Bid</button>
+            </div>
           </div>
         </div>
       ))}
 
-      {showModal && (
+      {showModal && selectedCar && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>{selectedCar.name}</h2>
+            <h2>{selectedCar.title}</h2>
+            <p className="category">{selectedCar.category}</p>
+            <p className="price">₹{selectedCar.price}</p>
 
             <input type="number" placeholder="Enter bid amount" />
 
