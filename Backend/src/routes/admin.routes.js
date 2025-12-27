@@ -16,7 +16,7 @@ router.post(
   "/product",
   authMiddleware,
   adminMiddleware,
-  upload.array("images", 1),
+  upload.array("images",1),
   createProductValidator,
   createProduct
 );
