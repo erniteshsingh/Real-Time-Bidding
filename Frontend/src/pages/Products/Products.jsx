@@ -36,7 +36,10 @@ const Products = () => {
     <div className="products-container">
       {cars.map((car) => (
         <div className="product-card" key={car._id}>
-          <img src={`http://localhost:3000/${car.images[0]}`} alt={car.title} />
+          <img
+            src={`http://localhost:3000/uploads/${car.images[0]}`}
+            alt={car.title}
+          />
 
           <div className="card-body">
             <h3 className="title">{car.title}</h3>
