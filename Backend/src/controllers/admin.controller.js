@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const Product = require("../models/product.model");
+
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({ role: "user" }).select("-password");
@@ -21,69 +22,73 @@ const getAllUsers = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const {
-      title,
-      description,
-      price,
-      category,
-      brand,
-      model,
-      fuelType,
-      transmission,
-      mileage,
-      auctionStartTime,
-      auctionEndTime,
-    } = req.body;
+    const products = req.body;
 
-    if (!title || !description || !price || !category || !brand || !model) {
+    // 1️⃣ Check array
+    if (!Array.isArray(products) || products.length === 0) {
       return res.status(400).json({
         success: false,
-        message: "All required fields must be provided",
+        message: "Products array is required",
       });
     }
 
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: "At least one product image is required",
-      });
-    }
+    // 2️⃣ Validate & prepare products
+    const formattedProducts = products.map((item, index) => {
+      const {
+        title,
+        description,
+        price,
+        category,
+        brand,
+        model,
+        fuelType,
+        transmission,
+        mileage,
+        images,
+      } = item;
 
-    const images = req.files.map((file) => `uploads/${file.filename}`);
-    console.log(images);
+      if (!title || !description || !price || !category || !brand || !model) {
+        throw new Error(`Missing required fields at index ${index}`);
+      }
 
-    const product = await Product.create({
-      title,
-      brand,
-      model,
-      description,
-      price,
-      category,
-      fuelType,
-      transmission,
-      mileage,
-      images,
-      auctionStartTime,
-      auctionEndTime,
-      status: "live",
-      createdBy: req.user.id,
+      if (!Array.isArray(images) || images.length === 0) {
+        throw new Error(`Images missing at index ${index}`);
+      }
+
+      return {
+        title,
+        brand,
+        model,
+        description,
+        price: Number(price),
+        category,
+        fuelType,
+        transmission,
+        mileage,
+        images,
+        status: "live",
+        createdBy: req.user.id,
+      };
     });
+
+    // 3️⃣ Insert all products at once
+    const createdProducts = await Product.insertMany(formattedProducts);
 
     return res.status(201).json({
       success: true,
-      message: "Product created successfully",
-      data: product,
+      message: `${createdProducts.length} products created successfully`,
+      data: createdProducts,
     });
   } catch (error) {
-    console.error("Create Product Error:", error);
+    console.error("Bulk Create Error:", error.message);
 
     return res.status(500).json({
       success: false,
-      message: "Failed to create product",
-      error: error.message,
+      message: error.message || "Failed to create products",
     });
   }
 };
+
 module.exports = {
   getAllUsers,
   createProduct,

@@ -3,8 +3,9 @@ const router = express.Router();
 const authMiddleware = require("../middlewares/auth.middlware");
 const adminMiddleware = require("../middlewares/admin.middleware");
 
-const upload = require("../middlewares/upload");
-const { createProductValidator } = require("../middlewares/productValidate");
+// I will use later once Admin Dashboard got Create
+// const upload = require("../middlewares/upload");
+const { createProductsValidator } = require("../middlewares/productValidate");
 const {
   getAllUsers,
   createProduct,
@@ -16,8 +17,7 @@ router.post(
   "/product",
   authMiddleware,
   adminMiddleware,
-  upload.array("images",1),
-  createProductValidator,
+  createProductsValidator,
   createProduct
 );
 

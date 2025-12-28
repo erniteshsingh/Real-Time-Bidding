@@ -43,7 +43,15 @@ const productSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ["Sedan", "SUV", "Sports", "Supercar", "Electric", "Off-road"],
+      enum: [
+        "Sedan",
+        "SUV",
+        "Sports",
+        "Supercar",
+        "Electric",
+        "Off-road",
+        "Hatchback",
+      ],
     },
 
     fuelType: {
@@ -53,7 +61,7 @@ const productSchema = new mongoose.Schema(
 
     transmission: {
       type: String,
-      enum: ["Manual", "Automatic"],
+      enum: ["Manual", "Automatic", "CVT"],
     },
 
     mileage: {
