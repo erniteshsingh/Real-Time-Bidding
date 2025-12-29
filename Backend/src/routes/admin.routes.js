@@ -9,6 +9,8 @@ const { createProductsValidator } = require("../middlewares/productValidate");
 const {
   getAllUsers,
   createProduct,
+  getAllProducts,
+  getSingleProduct,
 } = require("../controllers/admin.controller");
 
 router.get("/allusers", authMiddleware, adminMiddleware, getAllUsers);
@@ -20,5 +22,13 @@ router.post(
   createProductsValidator,
   createProduct
 );
+
+// What user can do!
+
+//Find all the products
+router.get("/getallProducts", getAllProducts);
+
+//find single product
+router.get("/getSingleProduct/:id", getSingleProduct);
 
 module.exports = router;

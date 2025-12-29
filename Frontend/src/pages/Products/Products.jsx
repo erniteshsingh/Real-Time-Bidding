@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "./Products.css";
 
 const Products = () => {
+  const [bid, setBid] = useState("");
   const [cars, setCars] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCar, setSelectedCar] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/api/products/getallProducts"
+          "http://localhost:3000/api/admin/getallProducts"
         );
         setCars(res.data.data);
       } catch (error) {
@@ -27,7 +32,31 @@ const Products = () => {
 
   const openModal = (car) => {
     setSelectedCar(car);
+    setBid("");
     setShowModal(true);
+  };
+
+  const viewDetails = (id) => {
+    navigate(`/products/${id}`);
+  };
+
+  const bidChangeHandler = (e) => {
+    setBid(Number(e.target.value));
+  };
+
+  const submitBid = () => {
+    if (!bid || bid <= 0) {
+      toast.warn("Bid amount must be greater than 0");
+      return;
+    }
+
+    setSelectedCar((prev) => ({
+      ...prev,
+      price: prev.price + bid,
+    }));
+
+    toast.success("Bid placed successfully!");
+    setBid("");
   };
 
   if (loading) return <p className="loading">Loading products...</p>;
@@ -43,14 +72,24 @@ const Products = () => {
 
           <div className="card-body">
             <h3 className="title">{car.title}</h3>
-
             <p className="category">{car.category}</p>
-
             <p className="description">{car.description?.slice(0, 80)}...</p>
 
             <div className="price-row">
               <span className="price">₹{car.price}</span>
-              <button onClick={() => openModal(car)}>Place Bid</button>
+
+              <div className="btn-group">
+                <button
+                  className="details-btn"
+                  onClick={() => viewDetails(car._id)}
+                >
+                  View Details
+                </button>
+
+                <button className="bid-btn" onClick={() => openModal(car)}>
+                  Place Bid
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -63,10 +102,17 @@ const Products = () => {
             <p className="category">{selectedCar.category}</p>
             <p className="price">₹{selectedCar.price}</p>
 
-            <input type="number" placeholder="Enter bid amount" />
+            <input
+              type="number"
+              value={bid}
+              onChange={bidChangeHandler}
+              placeholder="Enter bid amount"
+            />
 
             <div className="modal-actions">
-              <button className="submit">Submit Bid</button>
+              <button onClick={submitBid} className="submit">
+                Submit Bid
+              </button>
               <button className="close" onClick={() => setShowModal(false)}>
                 Cancel
               </button>
