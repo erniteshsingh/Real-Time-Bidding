@@ -1,103 +1,147 @@
 .details-container {
-    min-height: 100vh;
-    padding: 60px 40px;
-    background-color: var(--light-bg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  min-height: 100vh;
+  padding: 70px 40px;
+  background-color: var(--light-bg);
+  display: flex;
+  justify-content: center;
+}
+
+.details-wrapper {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  background: #020617;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75);
+}
+
+/* ---------- IMAGE ---------- */
+
+.image-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- INFO ---------- */
+
+.info-section {
+  padding: 40px;
+  color: var(--text-light);
+}
+
+.info-section h1 {
+  font-size: 30px;
+  margin-bottom: 6px;
+}
+
+.brand {
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.price {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin-bottom: 24px;
+}
+
+/* ---------- AUCTION ---------- */
+
+.auction-box {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.auction-box div {
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.auction-box span {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.live {
+  color: #22c55e;
+  text-transform: uppercase;
+}
+
+/* ---------- SPECS ---------- */
+
+.specs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.specs div {
+  font-size: 14px;
+  color: #e5e7eb;
+}
+
+.specs span {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ---------- DESCRIPTION ---------- */
+
+.description-box {
+  margin-bottom: 30px;
+}
+
+.description-box h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.description-box p {
+  line-height: 1.7;
+  color: #d1d5db;
+  font-size: 15px;
+}
+
+/* ---------- BUTTON ---------- */
+
+.start-bid-btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 17px;
+  font-weight: 800;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, var(--primary-color), #22c55e);
+  color: #020617;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.start-bid-btn:hover {
+  transform: scale(1.04);
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 900px) {
+  .details-wrapper {
+    grid-template-columns: 1fr;
   }
-  
-  .details-card {
-    max-width: 1000px;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    background: #020617;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
-  }
-  
-  /* ---------- Image ---------- */
-  
-  .image-section img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  /* ---------- Info ---------- */
-  
+
   .info-section {
     padding: 30px;
-    color: var(--text-light);
   }
-  
-  .info-section h1 {
-    font-size: 26px;
-    margin-bottom: 6px;
-  }
-  
-  .brand {
-    color: var(--text-muted);
-    margin-bottom: 12px;
-  }
-  
-  .price {
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-  }
-  
-  .specs {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .specs div {
-    font-size: 14px;
-    color: #cbd5e1;
-  }
-  
-  .specs span {
-    color: var(--text-muted);
-  }
-  
-  .description {
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 30px;
-    color: #e5e7eb;
-  }
-  
-  /* ---------- Button ---------- */
-  
-  .start-bid-btn {
-    width: 100%;
-    padding: 14px;
-    font-size: 16px;
-    font-weight: 700;
-    border-radius: 10px;
-    border: none;
-    background: linear-gradient(135deg, var(--primary-color), #22c55e);
-    color: #020617;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .start-bid-btn:hover {
-    transform: scale(1.03);
-  }
-  
-  /* ---------- Responsive ---------- */
-  
-  @media (max-width: 768px) {
-    .details-card {
-      grid-template-columns: 1fr;
-    }
-  }
-  
+}

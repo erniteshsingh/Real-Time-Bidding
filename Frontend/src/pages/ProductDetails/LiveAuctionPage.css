@@ -1,0 +1,139 @@
+.auction-container {
+    min-height: 100vh;
+    background: var(--light-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+  
+  .auction-card {
+    width: 100%;
+    max-width: 480px;
+    background: #020617;
+    border-radius: 18px;
+    padding: 32px;
+    color: var(--text-light);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75);
+  }
+  
+  /* HEADER */
+  
+  .auction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .auction-header h1 {
+    font-size: 24px;
+  }
+  
+  .status {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+  
+  .status.live {
+    background: #22c55e;
+    color: #020617;
+  }
+  
+  /* PRODUCT INFO */
+  
+  .product-info {
+    margin-bottom: 24px;
+  }
+  
+  .product-info h2 {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+  
+  .product-info p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  
+  /* CURRENT BID */
+  
+  .current-bid-box {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 18px;
+    border-radius: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .current-bid-box span {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  
+  .current-bid-box h3 {
+    font-size: 28px;
+    margin-top: 6px;
+    color: var(--primary-color);
+  }
+  
+  /* TIMER */
+  
+  .timer-box {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  
+  .timer-box span {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  
+  .timer-box strong {
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+  
+  /* BID SECTION */
+  
+  .bid-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .bid-section input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid white ;
+    background: var(--light-bg);
+    color: var(--text-light);
+  }
+  
+  .bid-section button {
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, var(--primary-color), #22c55e);
+    color: #020617;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .bid-section button:hover {
+    transform: scale(1.05);
+  }
+  
+  /* INFO TEXT */
+  
+  .info-text {
+    font-size: 12px;
+    color: #cbd5e1;
+    line-height: 1.6;
+  }
+  

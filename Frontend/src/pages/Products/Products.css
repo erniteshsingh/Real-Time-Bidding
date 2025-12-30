@@ -62,7 +62,7 @@
     margin-bottom: 14px;
   }
   
-  /* ---------- Price + Buttons ---------- */
+  /* ---------- Price + Button ---------- */
   
   .price-row {
     display: flex;
@@ -76,13 +76,8 @@
     color: var(--primary-color);
   }
   
-  .btn-group {
-    display: flex;
-    gap: 8px;
-  }
-  
   .details-btn {
-    padding: 8px 14px;
+    padding: 10px 16px;
     border-radius: 8px;
     border: 1px solid var(--primary-color);
     background: transparent;
@@ -95,77 +90,7 @@
   .details-btn:hover {
     background-color: var(--primary-color);
     color: #020617;
-  }
-  
-  .bid-btn {
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(135deg, var(--primary-color), #22c55e);
-    color: #020617;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .bid-btn:hover {
     transform: scale(1.05);
-  }
-  
-  /* ---------- Modal ---------- */
-  
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(2, 6, 23, 0.85);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal {
-    background: #020617;
-    padding: 26px;
-    border-radius: 14px;
-    width: 360px;
-    color: var(--text-light);
-  }
-  
-  .modal input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    border: none;
-    margin: 14px 0;
-    background-color: var(--light-bg);
-    color: var(--text-light);
-  }
-  
-  .modal-actions {
-    display: flex;
-    gap: 12px;
-  }
-  
-  .submit {
-    flex: 1;
-    padding: 10px;
-    border-radius: 6px;
-    border: none;
-    background-color: var(--primary-color);
-    color: #020617;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  
-  .close {
-    flex: 1;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid var(--primary-color);
-    background: transparent;
-    color: var(--primary-color);
-    cursor: pointer;
   }
   
   /* ---------- Responsive ---------- */

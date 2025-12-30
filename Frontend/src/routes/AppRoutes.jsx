@@ -5,8 +5,10 @@ import Contact from "../pages/Contact/Contact";
 import Sell from "../pages/Sell/Sell";
 import About from "../pages/About/About";
 import Services from "../pages/Service/Services";
-import ProductDetails from "../pages/ProductDetails/ProductDetailsPage";
+import ProductDetailsPage from "../pages/ProductDetails/ProductDetailsPage";
 import Profile from "../pages/Profile/Profile";
+
+import LiveAuctionPage from "../pages/ProductDetails/LiveAuctionPage";
 
 const AppRoutes = () => {
   return (
@@ -17,7 +19,8 @@ const AppRoutes = () => {
       <Route path="/sell" element={<Sell />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/products/:id" element={<ProductDetails />} />
+      <Route path="/products/:id" element={<ProductDetailsPage />} />
+      <Route path="/liveauction/:id" element={<LiveAuctionPage />} />
     </Routes>
   );
 };
