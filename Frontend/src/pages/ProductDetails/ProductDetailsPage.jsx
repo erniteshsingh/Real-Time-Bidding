@@ -56,7 +56,9 @@ const ProductDetails = () => {
             <div className="auction-box">
               <div>
                 <span>Current Bid:</span>
-                <strong>₹{product.currentBid}</strong>
+                <strong>
+                  ₹{product.currentBid > 0 ? product.currentBid : product.price}
+                </strong>
               </div>
               <div>
                 <span>Total Bids:</span>

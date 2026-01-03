@@ -16,19 +16,15 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
-  
-
   socket.on("join-auction", (productId) => {
     socket.join(productId);
     console.log(`User joined auction: ${productId}`);
   });
 
   // PLACE BID
-  socket.on("place-bid", async ({ productId, amount, userId }) => {
-    console.log("Your product id", productId);
+  socket.on("place-bid", async ({ productId, amount, userId, username }) => {
     try {
       const product = await Product.findById(productId);
-      console.log("your product", product);
 
       if (!product || !product.isAuction) return;
 
@@ -55,6 +51,7 @@ io.on("connection", (socket) => {
         currentBid: product.currentBid,
         totalBids: product.totalBids,
         lastBidBy: userId,
+        lastBidUsername: username,
       });
     } catch (error) {
       console.error(error);
