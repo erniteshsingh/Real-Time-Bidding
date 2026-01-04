@@ -140,7 +140,7 @@ const getWonAuctions = async (req, res) => {
         status: "sold",
       })
       .select(
-        "title price brand model images finalPrice auctionEndTime totalBids createdAt"
+        "title price     brand model images finalPrice auctionEndTime totalBids createdAt"
       )
       .sort({ auctionEndTime: -1 });
 
