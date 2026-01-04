@@ -1,34 +1,31 @@
 const mongoose = require("mongoose");
 
-const productSchema = new mongoose.Schema(
+const bidSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    brand: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    model: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    description: {
-      type: String,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
-
-    price: {
+    amount: {
       type: Number,
       required: true,
     },
+    time: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { _id: false }
+);
+
+const productSchema = new mongoose.Schema(
+  {
+    title: String,
+    brand: String,
+    model: String,
+    description: String,
+    price: Number,
 
     currentBid: {
       type: Number,
@@ -40,9 +37,24 @@ const productSchema = new mongoose.Schema(
       default: 1000,
     },
 
+    highestBidder: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+
+    bidHistory: [bidSchema],
+
+    finalPrice: {
+      type: Number,
+    },
+
+    winner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+
     category: {
       type: String,
-      required: true,
       enum: [
         "Sedan",
         "SUV",
@@ -54,38 +66,19 @@ const productSchema = new mongoose.Schema(
       ],
     },
 
-    fuelType: {
-      type: String,
-      enum: ["Petrol", "Diesel", "Electric", "Hybrid"],
-    },
-
-    transmission: {
-      type: String,
-      enum: ["Manual", "Automatic", "CVT"],
-    },
-
-    mileage: {
-      type: String,
-    },
-
-    images: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
+    images: [String],
 
     isAuction: {
       type: Boolean,
       default: true,
     },
 
-    auctionStartTime: {
-      type: Date,
-    },
+    auctionStartTime: Date,
+    auctionEndTime: Date,
 
-    auctionEndTime: {
-      type: Date,
+    auctionEnded: {
+      type: Boolean,
+      default: false,
     },
 
     totalBids: {

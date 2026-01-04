@@ -21,14 +21,12 @@ const LiveAuctionPage = () => {
   const [bidAmount, setBidAmount] = useState("");
   const [socket, setSocket] = useState(null);
 
-  // Set initial bid from product
   useEffect(() => {
     if (product) {
       setCurrentBid(product.currentBid);
     }
   }, [product]);
 
-  // Socket connection
   useEffect(() => {
     const newSocket = io("http://localhost:3000");
     setSocket(newSocket);
@@ -38,6 +36,12 @@ const LiveAuctionPage = () => {
     newSocket.on("bid-updated", (data) => {
       console.log("Data Printed at Frontend", data);
       setCurrentBid(data.currentBid);
+    });
+
+    newSocket.on("auction-ended", (data) => {
+      alert(
+        `Auction Ended!\nWinner: ${data.winnerId}\nFinal Bid: ₹${data.finalBid}`
+      );
     });
 
     return () => {

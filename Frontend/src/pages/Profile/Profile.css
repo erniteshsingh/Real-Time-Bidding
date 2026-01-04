@@ -1,86 +1,178 @@
 :root {
-    --primary-color: #38bdf8;
-    --dark-bg: #0f172a;
-    --card-bg: #020617;
-    --text-light: #ffffff;
-    --text-muted: #94a3b8;
+  --bg: #020617;
+  --card: #020617;
+  --muted: #94a3b8;
+  --text: #e5e7eb;
+  --accent: #38bdf8;
+  --success: #22c55e;
+  --border: #1e293b;
+}
+
+/* LAYOUT */
+.profile-layout {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #020617, #020617);
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 30px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+/* PROFILE CARD */
+.profile-card {
+  background: linear-gradient(180deg, #020617, #020617);
+  border-radius: 20px;
+  padding: 40px 25px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0,0,0,.55);
+}
+
+.avatar-icon {
+  font-size: 96px;
+  color: var(--accent);
+}
+
+.profile-card h2 {
+  margin-top: 12px;
+  color: var(--text);
+}
+
+.email {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 12px 0 24px;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.logout-btn:hover {
+  background: var(--accent);
+  color: #020617;
+}
+
+/* WON SECTION */
+.won-section {
+  background: linear-gradient(180deg, #020617, #020617);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.45);
+}
+
+.won-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  color: var(--text);
+}
+
+/* TABLE */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.auction-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.auction-table thead th {
+  text-align: left;
+  padding: 14px;
+  color: var(--muted);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  background: #020617;
+  position: sticky;
+  top: 0;
+}
+
+.auction-table td {
+  padding: 16px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.auction-table tr {
+  transition: background 0.25s ease;
+}
+
+.auction-table tr:hover {
+  background: rgba(56, 189, 248, 0.07);
+}
+
+/* PRODUCT CELL */
+.product-cell {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.product-cell img {
+  width: 76px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product-cell span {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* PRICE STYLES */
+.final-price {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.total-pay {
+  color: var(--success);
+  font-weight: 800;
+}
+
+/* ACTION */
+.buy-btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #38bdf8, #22d3ee);
+  color: #020617;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.buy-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(56,189,248,0.35);
+}
+
+/* STATES */
+.loading,
+.empty-text {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
   }
-  
-  /* Page */
-  .profile-page {
-    min-height: calc(100vh - 120px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--dark-bg);
-    padding: 40px 20px;
-  }
-  
-  /* Card */
-  .profile-card {
-    background-color: var(--card-bg);
-    padding: 40px;
-    border-radius: 14px;
-    width: 100%;
-    max-width: 420px;
-    text-align: center;
-    color: var(--text-light);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  }
-  
-  /* Avatar */
-  .profile-avatar {
-    font-size: 90px;
-    color: var(--primary-color);
-    margin-bottom: 15px;
-  }
-  
-  .profile-card h2 {
-    margin-bottom: 20px;
-  }
-  
-  /* Info */
-  .profile-info p {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    justify-content: center;
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-  
-  /* Actions */
-  .profile-actions {
-    margin-top: 25px;
-    display: flex;
-    gap: 12px;
-  }
-  
-  .profile-actions button {
-    flex: 1;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  
-  .edit-btn {
-    background-color: var(--primary-color);
-    color: #020617;
-  }
-  
-  .logout-btn {
-    background-color: transparent;
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
-  }
-  
-  /* Responsive */
-  @media (max-width: 480px) {
-    .profile-card {
-      padding: 30px 20px;
-    }
-  }
-  
+}

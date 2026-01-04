@@ -1,6 +1,7 @@
 const userModel = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const product = require("../models/product.model");
 
 const register = async (req, res) => {
   try {
@@ -127,4 +128,35 @@ const profile = async (req, res) => {
   }
 };
 
-module.exports = { register, login, logout, profile };
+const getWonAuctions = async (req, res) => {
+  console.log("Entered getWonAuctions controller");
+
+  try {
+    const userId = req.user.id;
+
+    const wonProducts = await product
+      .find({
+        winner: userId,
+        status: "sold",
+      })
+      .select(
+        "title price brand model images finalPrice auctionEndTime totalBids createdAt"
+      )
+      .sort({ auctionEndTime: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: wonProducts.length,
+      data: wonProducts,
+    });
+  } catch (error) {
+    console.error("getWonAuctions error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch won auctions",
+    });
+  }
+};
+
+module.exports = { register, login, logout, profile, getWonAuctions };

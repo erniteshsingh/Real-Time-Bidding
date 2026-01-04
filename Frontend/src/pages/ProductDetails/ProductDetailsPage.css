@@ -133,6 +133,18 @@
 .start-bid-btn:hover {
   transform: scale(1.04);
 }
+.end-time {
+  color: #f97316;
+  font-weight: 700;
+}
+
+.ended-text {
+  margin-top: 12px;
+  color: #ef4444;
+  font-weight: 700;
+  font-size: 14px;
+}
+
 
 /* ---------- RESPONSIVE ---------- */
 

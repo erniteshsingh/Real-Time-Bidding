@@ -24,7 +24,7 @@ const createProduct = async (req, res) => {
   try {
     const products = req.body;
 
-    // 1️⃣ Check array
+    // 1️⃣ Validate array
     if (!Array.isArray(products) || products.length === 0) {
       return res.status(400).json({
         success: false,
@@ -32,7 +32,7 @@ const createProduct = async (req, res) => {
       });
     }
 
-    // 2️⃣ Validate & prepare products
+    // 2️⃣ Prepare products
     const formattedProducts = products.map((item, index) => {
       const {
         title,
@@ -45,6 +45,10 @@ const createProduct = async (req, res) => {
         transmission,
         mileage,
         images,
+        isAuction,
+        auctionStartTime,
+        auctionEndTime,
+        minimumBidIncrement,
       } = item;
 
       if (!title || !description || !price || !category || !brand || !model) {
@@ -53,6 +57,11 @@ const createProduct = async (req, res) => {
 
       if (!Array.isArray(images) || images.length === 0) {
         throw new Error(`Images missing at index ${index}`);
+      }
+
+      // 🔐 Auction validation
+      if (isAuction && (!auctionStartTime || !auctionEndTime)) {
+        throw new Error(`Auction time missing at index ${index}`);
       }
 
       return {
@@ -66,12 +75,22 @@ const createProduct = async (req, res) => {
         transmission,
         mileage,
         images,
-        status: "live",
+        isAuction: Boolean(isAuction),
+        auctionStartTime: isAuction ? new Date(auctionStartTime) : null,
+        auctionEndTime: isAuction ? new Date(auctionEndTime) : null,
+        minimumBidIncrement: minimumBidIncrement || 1000,
+
+        currentBid: 0,
+        totalBids: 0,
+        auctionEnded: false,
+        bidHistory: [],
+        status: isAuction ? "live" : "draft",
+
         createdBy: req.user.id,
       };
     });
 
-    // 3️⃣ Insert all products at once
+    // 3️⃣ Insert into DB
     const createdProducts = await Product.insertMany(formattedProducts);
 
     return res.status(201).json({
@@ -80,8 +99,6 @@ const createProduct = async (req, res) => {
       data: createdProducts,
     });
   } catch (error) {
-    console.error("Bulk Create Error:", error.message);
-
     return res.status(500).json({
       success: false,
       message: error.message || "Failed to create products",
