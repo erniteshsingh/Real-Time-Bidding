@@ -1,0 +1,40 @@
+.admin-layout {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  /* Main content area */
+  .admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  /* Page content */
+  .admin-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #020617;
+    overflow-y: auto;
+  }
+  
+  /* -------------------- */
+  /* RESPONSIVE BREAKPOINT */
+  /* -------------------- */
+  
+  @media (max-width: 768px) {
+    .admin-layout {
+      flex-direction: column;
+    }
+  
+    .admin-main {
+      width: 100%;
+    }
+  
+    .admin-content {
+      padding: 14px;
+    }
+  }
+  

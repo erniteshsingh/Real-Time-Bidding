@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import AppRoutes from "./routes/AppRoutes";
+import AdminRoutes from "./admin/routes/AdminRoutes";
 const App = () => {
   return (
     <div>
@@ -15,11 +16,13 @@ const App = () => {
         draggable
         theme="dark"
       />
-      <Navbar />
+      {/* <Navbar /> */}
       <main className="main-content">
-        <AppRoutes />
+        {/* <AppRoutes /> */}
+
+        <AdminRoutes />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

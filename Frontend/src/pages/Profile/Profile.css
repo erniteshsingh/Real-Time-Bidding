@@ -16,7 +16,8 @@
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 30px;
-  max-width: 1400px;
+  /* max-width: 1400px; */
+  width: 100%;
   margin: auto;
 }
 
@@ -75,7 +76,8 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 22px;
-  color: var(--text);
+  /* color: var(--text); */
+  color: green;
 }
 
 /* TABLE */

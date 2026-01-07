@@ -1,0 +1,66 @@
+.admin-sidebar {
+    width: 240px;
+    background-color: #020617;
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #1e293b;
+    transition: transform 0.3s ease;
+  }
+  
+  /* ---------- MOBILE RESPONSIVE ---------- */
+  @media (max-width: 768px) {
+    .admin-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 1000;
+      transform: translateX(-100%);
+    }
+  
+    .admin-sidebar.open {
+      transform: translateX(0);
+    }
+  }
+  
+  /* ---------- CONTENT ---------- */
+  
+  .sidebar-top {
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #1e293b;
+  }
+  
+  .sidebar-menu {
+    flex: 1;
+    list-style: none;
+    padding: 10px 0;
+  }
+  
+  .sidebar-menu li {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .sidebar-menu li:hover {
+    background-color: #0f172a;
+  }
+  
+  .sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid #1e293b;
+  }
+  
+  .sidebar-footer button {
+    width: 100%;
+    padding: 10px;
+    background-color: #dc2626;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  
