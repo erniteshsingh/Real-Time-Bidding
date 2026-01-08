@@ -4,7 +4,6 @@
     width: 100%;
   }
   
-  /* Main content area */
   .admin-main {
     flex: 1;
     display: flex;
@@ -12,18 +11,23 @@
     overflow: hidden;
   }
   
-  /* Page content */
+
   .admin-content {
     flex: 1;
     padding: 20px;
     background-color: #020617;
     overflow-y: auto;
+    color: white;
   }
   
-  /* -------------------- */
-  /* RESPONSIVE BREAKPOINT */
-  /* -------------------- */
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 900;
+  }
   
+
   @media (max-width: 768px) {
     .admin-layout {
       flex-direction: column;

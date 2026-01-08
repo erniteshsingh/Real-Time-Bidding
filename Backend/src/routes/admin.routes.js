@@ -26,7 +26,7 @@ router.post(
 // What user can do!
 
 //Find all the products
-router.get("/getallProducts", getAllProducts);
+router.get("/cars", getAllProducts);
 
 //find single product
 router.get("/getSingleProduct/:id", getSingleProduct);

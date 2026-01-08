@@ -1,0 +1,37 @@
+.admin-navbar {
+    height: 60px;
+    background-color: #020617;
+    color: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    border-bottom: 1px solid #1e293b;
+  }
+  
+  .menu-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+    display: none;
+  }
+  
+  .navbar-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .navbar-right {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+  
+
+  @media (max-width: 768px) {
+    .menu-btn {
+      display: block;
+    }
+  }
+  

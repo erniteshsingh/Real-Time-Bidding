@@ -69,8 +69,6 @@ io.on("connection", (socket) => {
     try {
       const product = await Product.findById(productId);
 
-     
-
       if (!product || !product.isAuction) return;
 
       if (product.status !== "live") {
@@ -118,5 +116,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(3000, () => {
-  console.log("🚀 Server running on port 3000");
+  console.log(" Server running on port 3000");
 });

@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import AdminLayout from "../components/AdminLayout";
 
 import Dashboard from "../pages/Dashboard";
-import Cars from "../pages/Cars";
+import Cars from "../pages/AdminCars";
 import Auctions from "../pages/Auctions";
 import Bids from "../pages/Bids";
 import Users from "../pages/Users";
@@ -12,10 +12,10 @@ const AdminRoutes = () => {
     <Routes>
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
-        <Route path="cars" element={<Cars />} />
-        <Route path="auctions" element={<Auctions />} />
-        <Route path="bids" element={<Bids />} />
-        <Route path="users" element={<Users />} />
+        <Route path="/admin/cars" element={<Cars />} />
+        <Route path="/admin/auctions" element={<Auctions />} />
+        <Route path="/admin/bids" element={<Bids />} />
+        <Route path="/admin/users" element={<Users />} />
       </Route>
     </Routes>
   );
