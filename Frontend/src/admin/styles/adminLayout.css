@@ -18,6 +18,7 @@
     background-color: #020617;
     overflow-y: auto;
     color: white;
+    border: 1px solid white;
   }
   
   .sidebar-overlay {

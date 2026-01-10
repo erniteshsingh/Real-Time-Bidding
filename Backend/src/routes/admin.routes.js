@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../middlewares/auth.middlware");
 const adminMiddleware = require("../middlewares/admin.middleware");
+const upload = require("../middlewares/upload");
 
 // I will use later once Admin Dashboard got Create
 // const upload = require("../middlewares/upload");
@@ -15,13 +16,11 @@ const {
 
 router.get("/allusers", authMiddleware, adminMiddleware, getAllUsers);
 
-router.post(
-  "/product",
-  authMiddleware,
-  adminMiddleware,
-  createProductsValidator,
-  createProduct
-);
+// authMiddleware,
+// adminMiddleware,
+// createProductsValidator,
+
+router.post("/cars", upload.array("images", 1), createProduct);
 
 // What user can do!
 

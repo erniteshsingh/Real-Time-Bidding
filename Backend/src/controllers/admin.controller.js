@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const Product = require("../models/product.model");
+const mongoose = require("mongoose");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -22,89 +23,91 @@ const getAllUsers = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const products = req.body;
+    const {
+      title,
+      description,
+      price,
+      category,
+      brand,
+      model,
+      fuelType,
+      transmission,
+      mileage,
+      isAuction,
+      auctionStartTime,
+      auctionEndTime,
+      minimumBidIncrement,
+    } = req.body;
 
-    // 1️⃣ Validate array
-    if (!Array.isArray(products) || products.length === 0) {
+    if (!title || !description || !price || !category || !brand || !model) {
       return res.status(400).json({
         success: false,
-        message: "Products array is required",
+        message: "Missing required fields",
       });
     }
 
-    // 2️⃣ Prepare products
-    const formattedProducts = products.map((item, index) => {
-      const {
-        title,
-        description,
-        price,
-        category,
-        brand,
-        model,
-        fuelType,
-        transmission,
-        mileage,
-        images,
-        isAuction,
-        auctionStartTime,
-        auctionEndTime,
-        minimumBidIncrement,
-      } = item;
+    if (!req.files || req.files.length === 0) {
+      console.log("Insdie Image Error");
+      return res.status(400).json({
+        success: false,
+        message: "At least one image is required",
+      });
+    }
 
-      if (!title || !description || !price || !category || !brand || !model) {
-        throw new Error(`Missing required fields at index ${index}`);
-      }
+    const images = req.files.map((file) => file.filename);
 
-      if (!Array.isArray(images) || images.length === 0) {
-        throw new Error(`Images missing at index ${index}`);
-      }
+    const auctionEnabled = isAuction === "true" || isAuction === true;
 
-      // 🔐 Auction validation
-      if (isAuction && (!auctionStartTime || !auctionEndTime)) {
-        throw new Error(`Auction time missing at index ${index}`);
-      }
+    if (auctionEnabled && (!auctionStartTime || !auctionEndTime)) {
+      console.log("Insdie Auction Time Error");
+      return res.status(400).json({
+        success: false,
+        message: "Auction start and end time required",
+      });
+    }
 
-      return {
-        title,
-        brand,
-        model,
-        description,
-        price: Number(price),
-        category,
-        fuelType,
-        transmission,
-        mileage,
-        images,
-        isAuction: Boolean(isAuction),
-        auctionStartTime: isAuction ? new Date(auctionStartTime) : null,
-        auctionEndTime: isAuction ? new Date(auctionEndTime) : null,
-        minimumBidIncrement: minimumBidIncrement || 1000,
+    const productData = {
+      title,
+      brand,
+      model,
+      description,
+      price: Number(price),
+      category,
+      fuelType,
+      transmission,
+      mileage,
+      images,
 
-        currentBid: 0,
-        totalBids: 0,
-        auctionEnded: false,
-        bidHistory: [],
-        status: isAuction ? "live" : "draft",
+      isAuction: auctionEnabled,
+      auctionStartTime: auctionEnabled ? new Date(auctionStartTime) : null,
+      auctionEndTime: auctionEnabled ? new Date(auctionEndTime) : null,
+      minimumBidIncrement: minimumBidIncrement || 1000,
 
-        createdBy: req.user.id,
-      };
-    });
+      currentBid: 0,
+      totalBids: 0,
+      auctionEnded: false,
+      bidHistory: [],
+      status: auctionEnabled ? "live" : "draft",
 
-    // 3️⃣ Insert into DB
-    const createdProducts = await Product.insertMany(formattedProducts);
+      createdBy: new mongoose.Types.ObjectId("64e3a21f0c1a9b2d88a12345"),
+    };
+
+    const product = await Product.create(productData);
 
     return res.status(201).json({
       success: true,
-      message: `${createdProducts.length} products created successfully`,
-      data: createdProducts,
+      message: "Product created successfully",
+      data: product,
     });
   } catch (error) {
+    console.error(error);
     return res.status(500).json({
       success: false,
-      message: error.message || "Failed to create products",
+      message: error.message || "Failed to create product",
     });
   }
 };
+
 
 const getAllProducts = async (req, res) => {
   try {

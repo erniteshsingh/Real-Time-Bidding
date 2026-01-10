@@ -2,7 +2,11 @@ import "../styles/adminCars.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 const AdminCars = () => {
+  const navigate = useNavigate();
+
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -36,7 +40,13 @@ const AdminCars = () => {
       {/* HEADER */}
       <div className="cars-header">
         <h2>Cars Management</h2>
-        <button className="add-car-btn">+ Add Car</button>
+
+        <button
+          className="add-car-btn"
+          onClick={() => navigate("/admin/cars/add")}
+        >
+          + Add Car
+        </button>
       </div>
 
       {/* TABLE */}

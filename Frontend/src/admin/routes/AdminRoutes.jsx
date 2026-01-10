@@ -6,6 +6,7 @@ import Cars from "../pages/AdminCars";
 import Auctions from "../pages/Auctions";
 import Bids from "../pages/Bids";
 import Users from "../pages/Users";
+import AddCar from "../pages/AddCar";
 
 const AdminRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AdminRoutes = () => {
         <Route path="/admin/auctions" element={<Auctions />} />
         <Route path="/admin/bids" element={<Bids />} />
         <Route path="/admin/users" element={<Users />} />
+        <Route path="cars/add" element={<AddCar />} /> 
       </Route>
     </Routes>
   );
