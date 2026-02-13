@@ -26,9 +26,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:3000/api/admin/getSingleProduct/${id}`
-        );
+        const res = await axios.get(`http://localhost:3000/api/products/${id}`);
         setProduct(res.data.data);
       } catch (error) {
         console.error("Failed to fetch product", error);

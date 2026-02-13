@@ -15,7 +15,6 @@ const AdminLayout = () => {
         closeSidebar={() => setSidebarOpen(false)}
       />
 
-      {/* Overlay (mobile) */}
       {sidebarOpen && (
         <div
           className="sidebar-overlay"

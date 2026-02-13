@@ -14,12 +14,11 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:3000/api/admin/getallProducts"
-        );
+        const res = await axios.get("http://localhost:3000/api/products/");
 
         setProducts(res.data.data);
       } catch (error) {
+        console.log("Kuchh error hua hai products fetch karte waqt");
         console.error("Failed to fetch products", error);
       } finally {
         setLoading(false);

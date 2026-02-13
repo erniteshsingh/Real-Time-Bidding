@@ -13,7 +13,7 @@ const AdminCars = () => {
 
   const fetchCars = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/admin/cars");
+      const res = await axios.get("http://localhost:3000/api/products/");
       setCars(res.data.data || []);
     } catch (err) {
       setError("Failed to fetch cars");

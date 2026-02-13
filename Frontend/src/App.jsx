@@ -16,13 +16,13 @@ const App = () => {
         draggable
         theme="dark"
       />
-      {/* <Navbar /> */}
+      <Navbar />
       <main className="main-content">
-        {/* <AppRoutes /> */}
+        <AppRoutes />
 
         <AdminRoutes />
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
