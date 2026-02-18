@@ -9,7 +9,7 @@ const AdminLayout = () => {
 
   return (
     <div className="admin-layout">
-      {/* Sidebar */}
+    
       <AdminSidebar
         isOpen={sidebarOpen}
         closeSidebar={() => setSidebarOpen(false)}

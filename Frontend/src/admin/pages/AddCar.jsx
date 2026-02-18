@@ -50,19 +50,20 @@ const AddCar = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/admin/cars",
+        "http://localhost:3000/api/admin/products",
         data,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
 
       alert("Car added successfully!");
       console.log(res.data);
     } catch (error) {
       console.error(error);
+
       alert("Failed to add car");
     }
   };

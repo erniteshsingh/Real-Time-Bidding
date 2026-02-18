@@ -41,104 +41,130 @@ const ProductDetails = () => {
   if (loading) return <p className="loading">Loading product...</p>;
   if (!product) return <p>Product not found</p>;
 
+  // ✅ Proper Date Checks
+  const now = new Date();
+  const auctionStart = new Date(product.auctionStartTime);
+  const auctionEnd = new Date(product.auctionEndTime);
+
+  const auctionStarted = now >= auctionStart;
+  const auctionNotEnded = now <= auctionEnd;
+
+  const canStartBidding =
+    product.isAuction &&
+    product.status === "live" &&
+    auctionStarted &&
+    auctionNotEnded;
+
   return (
     <div className="details-container">
       <div className="details-wrapper">
-        {/* IMAGE */}
         <div className="image-section">
           <img
-            src={`http://localhost:3000/uploads/${product.images[0]}`}
+            src={`http://localhost:3000/uploads/${product.images?.[0]}`}
             alt={product.title}
           />
         </div>
 
-        {/* INFO */}
         <div className="info-section">
-          <h1>{product.title}</h1>
+          <div>
+            <h1>{product.title}</h1>
 
-          <p className="brand">
-            {product.brand} • {product.model}
-          </p>
+            <p className="brand">
+              {product.brand} • {product.model}
+            </p>
 
-          <p className="price">₹{product.price.toLocaleString()}</p>
+            <p className="price">₹{product.price?.toLocaleString()}</p>
 
-          {/* AUCTION INFO */}
-          {product.isAuction && (
-            <div className="auction-box">
-              <div>
-                <span>Current Bid:</span>
-                <strong>
-                  ₹{product.currentBid > 0 ? product.currentBid : product.price}
-                </strong>
+            {product.isAuction && (
+              <div className="auction-box">
+                <div>
+                  <span>Current Bid</span>
+                  <strong>
+                    Rs:
+                    {product.currentBid > 0
+                      ? product.currentBid.toLocaleString()
+                      : product.price.toLocaleString()}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Total Bids</span>
+                  <strong>{product.totalBids}</strong>
+                </div>
+
+                <div>
+                  <span>Min Increment</span>
+                  <strong>
+                    ₹{product.minimumBidIncrement?.toLocaleString()}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Status:</span>
+                  <strong className={product.status === "live" ? "live" : ""}>
+                    {product.status}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Auction Starts</span>
+                  <strong>{formatDateTime(product.auctionStartTime)}</strong>
+                </div>
+
+                <div>
+                  <span>Auction Ends</span>
+                  <strong className="end-time">
+                    {formatDateTime(product.auctionEndTime)}
+                  </strong>
+                </div>
               </div>
-
-              <div>
-                <span>Total Bids:</span>
-                <strong>{product.totalBids}</strong>
-              </div>
-
-              <div>
-                <span>Min Increment:</span>
-                <strong>₹{product.minimumBidIncrement}</strong>
-              </div>
-
-              <div>
-                <span>Status:</span>
-                <strong className="live">{product.status}</strong>
-              </div>
-
-              <div>
-                <span>Auctione Starts:</span>
-                <strong>{formatDateTime(product.auctionStartTime)}</strong>
-              </div>
-
-              <div>
-                <span>Auction Ends:</span>
-                <strong>{formatDateTime(product.auctionEndTime)}</strong>
-              </div>
-            </div>
-          )}
-
-          {/* SPECS */}
-          <div className="specs">
-            <div>
-              <span>Category:</span>
-              {product.category}
-            </div>
-            <div>
-              <span>Fuel Type:</span>
-              {product.fuelType || "N/A"}
-            </div>
-            <div>
-              <span>Transmission:</span>
-              {product.transmission || "N/A"}
-            </div>
-            <div>
-              <span>Mileage:</span>
-              {product.mileage || "N/A"}
-            </div>
-          </div>
-
-          {/* DESCRIPTION */}
-          <div className="description-box">
-            <h3>Description</h3>
-            <p>{product.description}</p>
-          </div>
-
-          {/* ACTION BUTTON */}
-          {product.isAuction &&
-            product.status === "live" &&
-            !product.auctionEnded && (
-              <button
-                className="start-bid-btn"
-                onClick={() => navigate(`/liveauction/${id}`)}
-              >
-                Start Live Bidding
-              </button>
             )}
 
-          {/* AUCTION ENDED */}
-          {product.auctionEnded && <p className="ended-text">Auction Ended</p>}
+            <div className="specs">
+              <div>
+                <span>Category</span>
+                {product.category}
+              </div>
+
+              <div>
+                <span>Fuel Type</span>
+                {product.fuelType || "N/A"}
+              </div>
+
+              <div>
+                <span>Transmission</span>
+                {product.transmission || "N/A"}
+              </div>
+
+              <div>
+                <span>Mileage</span>
+                {product.mileage || "N/A"}
+              </div>
+            </div>
+
+            <div className="description-box">
+              <h3>Description</h3>
+              <p>{product.description}</p>
+            </div>
+          </div>
+
+          {canStartBidding && (
+            <button
+              className="start-bid-btn"
+              onClick={() => navigate(`/liveauction/${id}`)}
+            >
+              Start Live Bidding
+            </button>
+          )}
+
+          {/* Optional Messages */}
+          {product.isAuction && !auctionStarted && (
+            <p className="ended-text">Auction has not started yet</p>
+          )}
+
+          {product.isAuction && !auctionNotEnded && (
+            <p className="ended-text">Auction Ended</p>
+          )}
         </div>
       </div>
     </div>

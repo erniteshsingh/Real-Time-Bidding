@@ -1,152 +1,182 @@
 .details-container {
   min-height: 100vh;
-  padding: 70px 40px;
-  background-color: var(--light-bg);
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #0f172a, #020617);
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .details-wrapper {
-  max-width: 1200px;
   width: 100%;
+  max-width: 1200px;
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 40px;
-  background: #020617;
-  border-radius: 18px;
+  grid-template-columns: 1.1fr 1fr;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(18px);
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
 }
 
-/* ---------- IMAGE ---------- */
+/* IMAGE */
+
+.image-section {
+  background: #000;
+  position: relative;
+}
 
 .image-section img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.6s ease;
 }
 
-/* ---------- INFO ---------- */
+.image-section:hover img {
+  transform: scale(1.05);
+}
+
+/* INFO */
 
 .info-section {
-  padding: 40px;
-  color: var(--text-light);
+  padding: 50px;
+  color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .info-section h1 {
-  font-size: 30px;
-  margin-bottom: 6px;
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
 .brand {
-  color: var(--text-muted);
-  margin-bottom: 16px;
+  font-size: 14px;
+  color: #94a3b8;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
 }
 
 .price {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 800;
-  color: var(--primary-color);
-  margin-bottom: 24px;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #22d3ee, #22c55e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* ---------- AUCTION ---------- */
+/* AUCTION BOX */
 
 .auction-box {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-  padding: 18px;
+  gap: 18px;
+  padding: 22px;
+  border-radius: 18px;
   background: rgba(255, 255, 255, 0.04);
-  border-radius: 12px;
-  margin-bottom: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 30px;
 }
 
 .auction-box div {
-  font-size: 14px;
+  font-size: 13px;
   color: #cbd5e1;
 }
 
 .auction-box span {
-  display: block;
-  font-size: 12px;
-  color: var(--text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #64748b;
 }
 
 .live {
   color: #22c55e;
-  text-transform: uppercase;
+  font-weight: 700;
 }
 
-/* ---------- SPECS ---------- */
+.end-time {
+  color: #f97316;
+  font-weight: 700;
+}
+
+/* SPECS */
 
 .specs {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 28px;
+  gap: 18px;
+  margin-bottom: 30px;
 }
 
 .specs div {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 14px 18px;
+  border-radius: 12px;
   font-size: 14px;
-  color: #e5e7eb;
 }
 
 .specs span {
   display: block;
-  font-size: 12px;
-  color: var(--text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #64748b;
+  margin-bottom: 4px;
 }
 
-/* ---------- DESCRIPTION ---------- */
+/* DESCRIPTION */
 
 .description-box {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 20px;
+  border-radius: 14px;
   margin-bottom: 30px;
 }
 
 .description-box h3 {
-  margin-bottom: 10px;
-  font-size: 18px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .description-box p {
+  font-size: 14px;
   line-height: 1.7;
-  color: #d1d5db;
-  font-size: 15px;
+  color: #cbd5e1;
 }
 
-/* ---------- BUTTON ---------- */
+/* BUTTON */
 
 .start-bid-btn {
-  width: 100%;
-  padding: 16px;
-  font-size: 17px;
-  font-weight: 800;
-  border-radius: 12px;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 14px;
   border: none;
-  background: linear-gradient(135deg, var(--primary-color), #22c55e);
+  background: linear-gradient(135deg, #22d3ee, #22c55e);
   color: #020617;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .start-bid-btn:hover {
-  transform: scale(1.04);
-}
-.end-time {
-  color: #f97316;
-  font-weight: 700;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(34, 211, 238, 0.4);
 }
 
 .ended-text {
-  margin-top: 12px;
-  color: #ef4444;
+  margin-top: 16px;
   font-weight: 700;
-  font-size: 14px;
+  color: #ef4444;
 }
 
-
-/* ---------- RESPONSIVE ---------- */
+/* RESPONSIVE */
 
 @media (max-width: 900px) {
   .details-wrapper {
