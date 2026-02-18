@@ -39,6 +39,7 @@ const createProduct = async (req, res) => {
       minimumBidIncrement,
     } = req.body;
 
+    // Required field validation
     if (!title || !description || !price || !category || !brand || !model) {
       return res.status(400).json({
         success: false,
@@ -46,8 +47,8 @@ const createProduct = async (req, res) => {
       });
     }
 
+    // Image validation
     if (!req.files || req.files.length === 0) {
-      console.log("Insdie Image Error");
       return res.status(400).json({
         success: false,
         message: "At least one image is required",
@@ -58,12 +59,37 @@ const createProduct = async (req, res) => {
 
     const auctionEnabled = isAuction === "true" || isAuction === true;
 
-    if (auctionEnabled && (!auctionStartTime || !auctionEndTime)) {
-      console.log("Insdie Auction Time Error");
-      return res.status(400).json({
-        success: false,
-        message: "Auction start and end time required",
-      });
+    let status = "draft";
+    let startTime = null;
+    let endTime = null;
+
+    if (auctionEnabled) {
+      if (!auctionStartTime || !auctionEndTime) {
+        return res.status(400).json({
+          success: false,
+          message: "Auction start and end time required",
+        });
+      }
+
+      startTime = new Date(auctionStartTime);
+      endTime = new Date(auctionEndTime);
+
+      if (startTime >= endTime) {
+        return res.status(400).json({
+          success: false,
+          message: "Auction end time must be after start time",
+        });
+      }
+
+      const now = new Date();
+
+      if (now < startTime) {
+        status = "upcoming";
+      } else if (now >= startTime && now <= endTime) {
+        status = "live";
+      } else {
+        status = "ended";
+      }
     }
 
     const productData = {
@@ -79,17 +105,19 @@ const createProduct = async (req, res) => {
       images,
 
       isAuction: auctionEnabled,
-      auctionStartTime: auctionEnabled ? new Date(auctionStartTime) : null,
-      auctionEndTime: auctionEnabled ? new Date(auctionEndTime) : null,
-      minimumBidIncrement: minimumBidIncrement || 1000,
+      auctionStartTime: startTime,
+      auctionEndTime: endTime,
+      minimumBidIncrement: minimumBidIncrement
+        ? Number(minimumBidIncrement)
+        : 1000,
 
       currentBid: 0,
       totalBids: 0,
       auctionEnded: false,
       bidHistory: [],
-      status: auctionEnabled ? "live" : "draft",
+      status,
 
-      createdBy: new mongoose.Types.ObjectId("64e3a21f0c1a9b2d88a12345"),
+      createdBy: req.user?._id, // assuming you use auth middleware
     };
 
     const product = await Product.create(productData);
@@ -100,7 +128,7 @@ const createProduct = async (req, res) => {
       data: product,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Create Product Error:", error);
     return res.status(500).json({
       success: false,
       message: error.message || "Failed to create product",

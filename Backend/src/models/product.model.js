@@ -16,7 +16,7 @@ const bidSchema = new mongoose.Schema(
       default: Date.now,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const productSchema = new mongoose.Schema(
@@ -27,6 +27,11 @@ const productSchema = new mongoose.Schema(
     description: String,
     price: Number,
 
+    fuelType: {
+      type: String,
+      required: true,
+      default: "diesel",
+    },
     currentBid: {
       type: Number,
       default: 0,
@@ -88,17 +93,13 @@ const productSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["draft", "live", "sold", "expired"],
+      enum: ["draft", "live", "sold", "expired","upcoming"],
       default: "draft",
     },
 
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+    
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Product", productSchema);
