@@ -12,7 +12,8 @@ const {
 } = require("../controllers/admin.controller");
 
 // Get all users (admin only)
-router.get("/users", authMiddleware, adminMiddleware, getAllUsers);
+// authMiddleware, adminMiddleware,
+router.get("/users", getAllUsers);
 
 // Create product (admin only)
 // authMiddleware,

@@ -97,8 +97,8 @@ const AdminCars = () => {
                         getAuctionStatus(car) === "Live"
                           ? "live"
                           : getAuctionStatus(car) === "Ended"
-                          ? "ended"
-                          : "inactive"
+                            ? "ended"
+                            : "inactive"
                       }`}
                     >
                       {getAuctionStatus(car)}
