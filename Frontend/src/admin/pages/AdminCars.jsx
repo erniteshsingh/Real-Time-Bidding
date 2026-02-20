@@ -37,7 +37,6 @@ const AdminCars = () => {
 
   return (
     <div className="admin-cars">
-      {/* HEADER */}
       <div className="cars-header">
         <h2>Cars Management</h2>
 
@@ -49,7 +48,6 @@ const AdminCars = () => {
         </button>
       </div>
 
-      {/* TABLE */}
       <div className="cars-table-wrapper">
         <table className="cars-table">
           <thead>

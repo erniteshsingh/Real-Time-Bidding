@@ -5,34 +5,46 @@ import "../styles/Users.css";
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalUsers, setTotalUsers] = useState(0);
+
+ 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [search]);
+
 
   const fetchUsers = async () => {
     try {
       setLoading(true);
 
       const res = await axios.get(
-        `http://localhost:3000/api/admin/users?page=${page}&limit=12`,
+        `http://localhost:3000/api/admin/users?page=${page}&limit=12&search=${debouncedSearch}`,
       );
 
       setUsers(res.data.users || []);
       setTotalPages(res.data.pagination?.totalPages || 1);
+      setTotalUsers(res.data.pagination?.totalUsers || 0);
     } catch (error) {
       console.error("Failed to fetch users", error);
     } finally {
       setLoading(false);
     }
   };
+
+ 
   useEffect(() => {
     fetchUsers();
-  }, [page]);
-
-  const filteredUsers = users.filter((user) =>
-    user.username?.toLowerCase().includes(search.toLowerCase()),
-  );
+  }, [page, debouncedSearch]);
 
   return (
     <div className="users-page">
@@ -50,7 +62,7 @@ const Users = () => {
         />
 
         <div className="users-count">
-          Total Users: <strong>{users.length}</strong>
+          Total Users: <strong>{totalUsers}</strong>
         </div>
       </div>
 
@@ -70,19 +82,20 @@ const Users = () => {
                   <th>Joined</th>
                 </tr>
               </thead>
+
               <tbody>
-                {filteredUsers.length === 0 ? (
+                {users.length === 0 ? (
                   <tr>
                     <td colSpan="6" className="no-data">
                       No users found
                     </td>
                   </tr>
                 ) : (
-                  filteredUsers.map((user) => (
+                  users.map((user) => (
                     <tr key={user._id}>
                       <td className="user-id">{user._id}</td>
                       <td className="user-name">{user.username}</td>
-                      <td className="user-email">{user.email}</td>
+                      <td className="user-email">{user.email || "N/A"}</td>
                       <td>
                         <span className="role-badge">{user.role}</span>
                       </td>
@@ -96,7 +109,9 @@ const Users = () => {
                         </span>
                       </td>
                       <td>
-                        {new Date(user.createdAt).toLocaleDateString("en-IN")}
+                        {user.createdAt
+                          ? new Date(user.createdAt).toLocaleDateString("en-IN")
+                          : "N/A"}
                       </td>
                     </tr>
                   ))
@@ -104,7 +119,6 @@ const Users = () => {
               </tbody>
             </table>
 
-            {/* ✅ PAGINATION UI */}
             <div className="pagination">
               <button
                 disabled={page === 1}
