@@ -4,26 +4,25 @@ const mongoose = require("mongoose");
 
 const getAllUsers = async (req, res) => {
   try {
-    // 🔹 query params
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
     const search = req.query.search || "";
 
+    console.log("page &limit:", page, limit);
+    console.log("Searched", search);
+
     const skip = (page - 1) * limit;
 
-    // 🔹 search filter
     const searchFilter = {
       role: "user",
-      username: { $regex: search, $options: "i" }, // case-insensitive search
+      username: { $regex: search, $options: "i" },
     };
 
-    // 🔹 total count (for pagination)
     const totalUsers = await User.countDocuments(searchFilter);
 
-    // 🔹 fetch users
     const users = await User.find(searchFilter)
       .select("-password")
-      .sort({ createdAt: -1 }) // latest first
+      .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
 

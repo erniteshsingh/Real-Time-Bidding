@@ -96,8 +96,6 @@ const productSchema = new mongoose.Schema(
       enum: ["draft", "live", "sold", "expired","upcoming"],
       default: "draft",
     },
-
-    
   },
   { timestamps: true },
 );
