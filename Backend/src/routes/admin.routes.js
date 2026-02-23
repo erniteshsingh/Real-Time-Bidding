@@ -4,11 +4,12 @@ const authMiddleware = require("../middlewares/auth.middlware");
 const adminMiddleware = require("../middlewares/admin.middleware");
 const upload = require("../middlewares/upload");
 
- const { createProductsValidator } = require("../middlewares/productValidate");
+const { createProductsValidator } = require("../middlewares/productValidate");
 
 const {
   createProduct,
   getAllUsers,
+  toggleBlockUser
 } = require("../controllers/admin.controller");
 
 // Get all users (admin only)
@@ -19,12 +20,8 @@ router.get("/users", getAllUsers);
 // authMiddleware,
 // adminMiddleware,
 
-router.post(
-  "/products",
-  upload.array("images", 1),
-  createProduct
-);
+router.post("/products", upload.array("images", 1), createProduct);
 
-
+router.patch("/users/:id/block", toggleBlockUser);
 
 module.exports = router;

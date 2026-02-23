@@ -1,34 +1,57 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../utils/axiosInstance"; 
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   const [loading, setLoading] = useState(true);
 
-  const login = (userData) => {
+  
+  const login = (userData, token) => {
     setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+    if (token) localStorage.setItem("token", token);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await axiosInstance.post("/auth/logout"); 
+    } catch (err) {
+      console.error("Logout API failed:", err);
+    }
+
     setUser(null);
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/auth/profile", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setUser(res.data.user);
-      })
-      .catch(() => {
-        setUser(null);
-      })
-      .finally(() => {
+    const fetchProfile = async () => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
         setLoading(false);
-      });
+      } else {
+        try {
+          const res = await axiosInstance.get("/auth/profile");
+          setUser(res.data.user);
+        } catch (err) {
+          setUser(null);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchProfile();
   }, []);
 
   return (

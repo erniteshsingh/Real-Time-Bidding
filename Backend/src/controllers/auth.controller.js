@@ -40,6 +40,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    console.log("Entered login controller fuck you");
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -57,6 +58,13 @@ const login = async (req, res) => {
       });
     }
 
+    if (user.isBlocked) {
+      return res.status(403).json({
+        status: false,
+        message: "Your account has been blocked. Contact admin.",
+      });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({
@@ -68,7 +76,7 @@ const login = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "1d" },
     );
 
     res.cookie("token", token, {
@@ -100,7 +108,7 @@ const login = async (req, res) => {
 const logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    secure: false, // production me true
+    secure: false,
     sameSite: "strict",
   });
 
@@ -129,8 +137,7 @@ const profile = async (req, res) => {
 };
 
 const getWonAuctions = async (req, res) => {
-  console.log("Entered getWonAuctions controller");
-
+  
   try {
     const userId = req.user.id;
 
@@ -140,7 +147,7 @@ const getWonAuctions = async (req, res) => {
         status: "sold",
       })
       .select(
-        "title price     brand model images finalPrice auctionEndTime totalBids createdAt"
+        "title price     brand model images finalPrice auctionEndTime totalBids createdAt",
       )
       .sort({ auctionEndTime: -1 });
 

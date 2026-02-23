@@ -159,7 +159,41 @@ const createProduct = async (req, res) => {
   }
 };
 
+const toggleBlockUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    console.log("This is a userID called:", userId);
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        status: false,
+        message: "User not found",
+      });
+    }
+
+    user.isBlocked = !user.isBlocked;
+    await user.save();
+
+    res.status(200).json({
+      status: true,
+      message: user.isBlocked
+        ? "User blocked successfully"
+        : "User unblocked successfully",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: false,
+      message: "Failed to update user status",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   getAllUsers,
   createProduct,
+  toggleBlockUser,
 };

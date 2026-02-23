@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+
+import axiosInstance from "../../utils/axiosInstance";
 const Login = ({ onClose, onOpenRegister }) => {
   const navigate = useNavigate();
 
@@ -25,28 +27,21 @@ const Login = ({ onClose, onOpenRegister }) => {
 
   const submithandler = async (e) => {
     e.preventDefault();
-
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        loginuser,
-        { withCredentials: true }
-      );
-      login(res.data.user);
-      if (res.status === 200) {
-        toast.success("User Login Successful");
-        setTimeout(() => {
-          Setloginuser({
-            email: "",
-            password: "",
-          });
-          onClose();
-          navigate("/");
-        }, 2000);
-      }
+      const res = await axiosInstance.post("/auth/login", loginuser);
+      login(res.data.user, res.data.token); // token optional if backend sends
+      toast.success("User Login Successful");
+
+      setTimeout(() => {
+        Setloginuser({ email: "", password: "" });
+        onClose();
+        navigate("/");
+      }, 2000);
     } catch (error) {
-      if (error.response && error.response.status === 401) {
+      if (error.response?.status === 401) {
         toast.error("Invalid email or password");
+      } else if (error.response?.status === 403) {
+        toast.error("Your account has been blocked. Contact admin");
       } else {
         toast.error("Facing some issues right now!!");
       }

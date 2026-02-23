@@ -36,7 +36,7 @@ const LiveAuctionPage = () => {
 
     newSocket.on("auction-ended", (data) => {
       alert(
-        `🏆 Auction Ended!\nWinner: ${data.username}\nFinal Bid: ₹${data.finalBid}`,
+        ` Auction Ended!\nWinner: ${data.username}\nFinal Bid: ₹${data.finalBid}`,
       );
       navigate("/");
     });
